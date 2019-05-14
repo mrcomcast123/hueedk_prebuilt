@@ -1,0 +1,16 @@
+[Unit]
+Description=SDV Agent service
+After=lighttpd.service irmgr.service rmfstreamer.service xre-receiver.service
+Requires=xre-receiver.service
+
+[Service]
+Type=forking
+SyslogIdentifier="x1_edk_player"
+ExecStartPre=/bin/sh -c '/lib/rdk/opt-override.sh'
+ExecStart=/bin/sh -c '/usr/bin/x1_edk_player &'
+RestartPreventExitStatus=1
+SuccessExitStatus=1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
